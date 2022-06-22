@@ -1,2 +1,15 @@
-package com.java.schoolregistrationsystem.model;public class RegistrationRequest {
+package com.java.schoolregistrationsystem.model;
+
+import com.java.schoolregistrationsystem.validation.constraint.StudentConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RegistrationRequest {
+    @StudentConstraint
+    private String name;
+    private String courseName;
 }
