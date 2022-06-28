@@ -9,9 +9,9 @@ CREATE TABLE Courses(
 );
 
 CREATE TABLE Course_Membership(
-                                  student binary(16),
-                                  course binary(16),
-                                  foreign key (student) references Students (student_id),
-                                  foreign key (course) references Courses (course_id),
-                                  primary key (student, course)
+                                  student_id binary(16),
+                                  course_id binary(16),
+                                  foreign key (student_id) references Students (student_id),
+                                  foreign key (course_id) references Courses (course_id),
+                                  primary key (student_id, course_id)
 )

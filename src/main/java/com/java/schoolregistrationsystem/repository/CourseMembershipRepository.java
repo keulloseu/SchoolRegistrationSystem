@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface CourseMembershipRepository extends JpaRepository<CourseMembershipEntity, Integer> {
     List<CourseMembershipEntity> findAllByStudentId(UUID id);
+    List<CourseMembershipEntity> findAllByCourseId(UUID id);
 }

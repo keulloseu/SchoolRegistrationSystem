@@ -10,5 +10,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CourseDeleteResponse {
-    boolean wasSuccesful;
+    boolean wasSuccessful;
 }

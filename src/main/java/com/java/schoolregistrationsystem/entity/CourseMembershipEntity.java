@@ -17,10 +17,10 @@ import java.util.UUID;
 @IdClass(CourseStudentPrimaryKey.class)
 public class CourseMembershipEntity {
     @Id
-    @Column(name = "student")
+    @Column(name = "student_id")
     private UUID studentId;
     @Id
-    @Column(name = "course")
+    @Column(name = "course_id")
     private UUID courseId;
 
     public CourseMembershipEntity(UUID studentId, UUID courseId) {

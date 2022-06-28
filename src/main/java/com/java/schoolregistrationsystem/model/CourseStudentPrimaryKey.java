@@ -12,8 +12,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseStudentPrimaryKey implements Serializable {
-    @Column(name = "student")
+    @Column(name = "student_id")
     private UUID studentId;
-    @Column(name = "course")
+    @Column(name = "course_id")
     private UUID courseId;
 }

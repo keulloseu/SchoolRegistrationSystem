@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +28,8 @@ public class CourseService {
     }
 
     public CourseDTO getDTOByName(String name) {
-        return modelMapper.map(courseRepository.findByName(name).orElse(null), CourseDTO.class);
+        return modelMapper.map(courseRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("COURSE")), CourseDTO.class);
     }
 
     public CourseDTO createDTO(CourseCreationDTO courseCreationDTO) {
@@ -36,13 +37,10 @@ public class CourseService {
                 .map(courseRepository.save(modelMapper.map(courseCreationDTO, CourseEntity.class)), CourseDTO.class);
     }
 
-    public CourseDeleteResponse deleteCourse(String name) {
-        Optional<CourseEntity> optCourse = courseRepository.findByName(name);
-        if (optCourse.isPresent()) {
-            courseRepository.delete(optCourse.get());
-            return new CourseDeleteResponse(true);
-        } else {
-            return new CourseDeleteResponse(false);
-        }
+    public CourseDeleteResponse deleteDTO(String name) {
+        CourseEntity course = courseRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("COURSE"));
+        courseRepository.delete(course);
+        return new CourseDeleteResponse(true);
     }
 }
