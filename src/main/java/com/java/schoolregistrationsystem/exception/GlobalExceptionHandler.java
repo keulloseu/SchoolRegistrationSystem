@@ -27,10 +27,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity<List> methodArgumentNotValidExceptionHandler(final MethodArgumentNotValidException e) {
-        List list = e.getBindingResult().getAllErrors().stream()
+    public ResponseEntity<List<ApiError>> methodArgumentNotValidExceptionHandler(final MethodArgumentNotValidException e) {
+        List<ApiError> apiErrors = e.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
+                .map(ApiError::new).toList();
+        return new ResponseEntity<>(apiErrors, HttpStatus.BAD_REQUEST);
     }
 }

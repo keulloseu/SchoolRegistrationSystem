@@ -30,6 +30,8 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
@@ -60,10 +62,9 @@ public class RegisterControllerIntegrationTests {
         when(validationService.studentAmountValidation(any(String.class)))
                 .thenReturn(true);
 
-        this.mvc.perform(MockMvcRequestBuilders
-                .post("/register")
-                .content(mapper.writeValueAsString(request))
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+        this.mvc.perform(post("/register")
+                        .content(mapper.writeValueAsString(request))
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.successful").value(true));
     }
@@ -80,9 +81,11 @@ public class RegisterControllerIntegrationTests {
         when(validationService.courseAmountValidation(any(String.class)))
                 .thenReturn(true);
 
-        this.mvc.perform(MockMvcRequestBuilders.post("/register")
-                .content(mapper.writeValueAsString(request))
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest()); //DOKONCZYC !!!!!!!!!!!!!!!!!!!!!
+        this.mvc.perform(post("/register")
+                        .content(mapper.writeValueAsString(request))
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.[*].message").value("Number of students for this course have been exceeded")); //DOKONCZYC !!!!!!!!!!!!!!!!!!!!!
     }
 }

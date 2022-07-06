@@ -24,7 +24,7 @@ public class RegistrationService {
     public ResponseEntity<RegisterResponse> registerStudent(RegistrationRequest request) {
         StudentEntity student = studentRepository.findByName(request.getName())
                 .orElseThrow(() -> new EntityNotFoundException("STUDENT"));
-        CourseEntity course = courseRepository.findByName(request.getCourseName())
+        CourseEntity course = courseRepository.findByName(request.getCourseName()) // findAll(getSpecification(studentId), pageable)
                 .orElseThrow(() -> new EntityNotFoundException("COURSE"));
         courseMembershipRepository.save(new CourseMembershipEntity(student.getId(), course.getId()));
         return ResponseEntity.ok(new RegisterResponse(true));

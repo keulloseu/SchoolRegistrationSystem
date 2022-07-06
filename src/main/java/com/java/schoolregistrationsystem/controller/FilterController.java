@@ -7,10 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +19,7 @@ public class FilterController {
 
     @GetMapping("/course/{name}")
     @ApiOperation(value = "Get all students attending selected course")
-    public ResponseEntity<List<StudentDTO>> filterStudentsForCourse(@ApiParam(value = "Provide course name in url")
+    public ResponseEntity<List<StudentDTO>> filterStudentsForCourse(@RequestParam(name = "test", required = false) String studentId, @ApiParam(value = "Provide course name in url")
                                                                         @PathVariable String name) {
         return ResponseEntity.ok(filterService.filterStudentsWithCourse(name));
     }
